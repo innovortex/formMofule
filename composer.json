@@ -1,5 +1,5 @@
 {
-    "name": "kris/laravel-form-builder",
+    "name": "innolara/form",
     "description": "Laravel form builder - symfony like",
     "license": "MIT",
     "authors": [
