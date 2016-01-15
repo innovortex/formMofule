@@ -59,6 +59,8 @@ class FormMakeCommand extends GeneratorCommand
     {
         return array(
             array('model',null,InputOption::VALUE_OPTIONAL, 'Model where get field to initialize'),
+            array('model_namespace',null,InputOption::VALUE_OPTIONAL, 'Namespace of Model where get field to initialize with double backslash'),
+            array('db',null,InputOption::VALUE_OPTIONAL, 'Name of db'),
             array('fields', null, InputOption::VALUE_OPTIONAL, 'Fields for the form'),
             array('namespace', null, InputOption::VALUE_OPTIONAL, 'Class namespace'),
             array('path', null, InputOption::VALUE_OPTIONAL, 'File path')
@@ -76,6 +78,11 @@ class FormMakeCommand extends GeneratorCommand
     {
         $formGenerator = $this->formGenerator;
 
+        $model_namespace = "App\\";
+        if($this->option('model_namespace') != null){
+            $model_namespace = $this->option('model_namespace');
+        }
+
         $stub = str_replace(
             '{{class}}',
             $formGenerator->getClassInfo($name)->className,
@@ -85,7 +92,7 @@ class FormMakeCommand extends GeneratorCommand
         if($this->option('model') != null){
             return str_replace(
                 '{{fields}}',
-                $formGenerator->getModelVariable($this->option('model')),
+                $formGenerator->getModelVariable($this->option('model'), $model_namespace, $this->option('db')),
                 $stub
             );
         }
