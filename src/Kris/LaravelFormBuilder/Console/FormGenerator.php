@@ -33,15 +33,20 @@ class FormGenerator
         return $this->binding_type[$type[0]];
     }
 
-    public function getModelVariable($model = null){
+    public function getModelVariable($model = null, $model_namespace="App\\", $db_=false){
 
         $result = "";
-        $model = 'App\\'.$model;
+        $model = $model_namespace."\\".$model;
         $modelObject = new $model;
+
+        $db = 'mysql';
+        if($db_ != false){
+            $db = $db_;
+        }
 
         $cols = [];
 
-        $table_info_columns = DB::select( DB::raw('SHOW COLUMNS FROM '.$modelObject->getTable()));
+        $table_info_columns = DB::connection($db)->select( DB::raw('SHOW COLUMNS FROM '.$modelObject->getTable()));
 
         foreach($table_info_columns as $column){
             $result .= $column->Field.':'.$this->parseDbType($column->Type).',';
