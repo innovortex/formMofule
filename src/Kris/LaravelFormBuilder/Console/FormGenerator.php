@@ -49,7 +49,12 @@ class FormGenerator
         $table_info_columns = DB::connection($db)->select( DB::raw('SHOW COLUMNS FROM '.$modelObject->getTable()));
 
         foreach($table_info_columns as $column){
-            $result .= $column->Field.':'.$this->parseDbType($column->Type).',';
+            if($column->Type != "enum") {
+                $result .= $column->Field . ':' . $this->parseDbType($column->Type) . ',';
+            }
+            else{
+                $result .= $column->Field . ':select,';
+            }
         }
 
         $result = rtrim($result, ",");
