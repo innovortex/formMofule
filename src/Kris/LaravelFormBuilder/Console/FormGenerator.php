@@ -13,6 +13,7 @@ class FormGenerator
         'timestamp'   =>  'text',
         'enum'   =>  'select',
         'date'   =>  'text',
+        'decimal'   =>  'number',
     ];
 
     /**
