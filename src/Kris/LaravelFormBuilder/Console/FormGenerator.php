@@ -12,6 +12,7 @@ class FormGenerator
         'tinyint'   =>  'checkbox',
         'timestamp'   =>  'text',
         'enum'   =>  'select',
+        'date'   =>  'text',
     ];
 
     /**
